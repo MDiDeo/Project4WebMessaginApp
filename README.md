@@ -1,7 +1,9 @@
 # Project4WebMessagingApp
 Class project for COP 4331C
 I honestly do not know why I kept everything in a login folder. However I am honestly too lazy to change it.
-The SQL files for the database are included, they may need to either be moved into the login folder, or have everything moved out. 
+
+The SQL files for the database are included, they may need to either be moved into the login folder, or have everything moved out.
+
 If there are any issues, please email me at migueldideo@knights.ucf.edu
 
 The files work as follows:
