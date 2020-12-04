@@ -3,6 +3,7 @@ Class project for COP 4331C
 I honestly do not know why I kept everything in a login folder. However I am honestly too lazy to change it.
 
 The files work as follows:
+
   errors.php: sets up an errors array that can be pushed to every time there is an error, preventing non-applicable data from being entered.
   
   inbox.php: page entered from the index, allows user to see all messages sent to them, and allows them to easily reply.
