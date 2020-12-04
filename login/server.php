@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    $firstName = $lastName = $uName = $tName = $email = $pass1 = $pass2 = $semester = $role = "";
+    $firstName = $lastName = $uName = $sender = $recipient = $tName = $email = $pass1 = $pass2 = $semester = $role = "";
     $year = 0;
     $errors = array();
     // connect to the database
@@ -89,7 +89,7 @@
                 $_SESSION['firstName'] = $firstName;
                 $_SESSION['lastName'] = $lastName;
                 $_SESSION['role'] = $role;
-                $_SESSION['success'] = "You are now logged in";
+                $_SESSION['success'] = "You are now logged in ";
                 header('location: index.php');
     
             } else {
@@ -98,59 +98,37 @@
         }
     }
 
-    if (isset($_POST['apply'])) {
-        $uName = $_SESSION['uName'];
-        $firstName = mysqli_real_escape_string($db, $_POST['sfirstName']);
-        $lastName = mysqli_real_escape_string($db, $_POST['slastName']);
-        $tName = mysqli_real_escape_string($db, $_POST['tName']);
-        $semester = mysqli_real_escape_string($db, $_POST['semester']);
-        $year = $_POST['year'];
+    if (isset($_POST['send_message'])) {
+        $recipient = mysqli_real_escape_string($message_db, $_POST['recipient']);
+        $sender = $_SESSION['uName'];
+        $message = mysqli_real_escape_string($message_db, $_POST['message']);
 
-        if (empty($firstName)) {
-            array_push($errors, "First name is required");
+        $find_recipient = mysqli_query($db, "SELECT uName FROM users WHERE uName = '$recipient'");
+        $find_sender = mysqli_query($db, "SELECT uName FROM users WHERE uName = '$sender'");
+
+        if (empty($recipient)) {
+            array_push($errors, "Enter the recipient's username");
         }
 
-        if (empty($lastName)) {
-            array_push($errors, "Last name is required");
+        if ($find_recipient == 0) {
+            array_push($errors, "Must send to a valid recipient. Please enter their username.");
         }
 
-        if (empty($tName)) {
-            array_push($errors, "Teacher's name is required.");
+        if ($find_sender == 0) {
+            array_push($errors, "Incorrect username");
         }
 
-        if (empty($semester)) {
-            array_push($errors, "Must select a semester.");
-        }
-
-        if (empty($year)) {
-            array_push($errors, "Year is required.");
-        }
-
-        if ($year < date("Y")) {
-            array_push($errors, "Unable to enter a year prior to the current year.");
+        if (empty($message)) {
+            array_push($errors, "Username is required");
         }
 
         if (count($errors) == 0) {
-            $res = mysqli_query($db, "SELECT * FROM users WHERE firstName= '$firstName' AND lastName= '$lastName' AND uName= '$uName'");
-            if (mysqli_num_rows($res) == 1) {
-
-                $row = mysqli_fetch_array($res);
-                $id = $row['id'];
-
-                $sql = "INSERT INTO tas (sid, uName, firstName, lastName, tName, semester, year, status) VALUES ('$id', '$uName','$firstName', '$lastName', '$tName', '$semester', '$year', 'pending')";
-                mysqli_query($db, $sql);
-
-
-                $_SESSION['submitted'] = "Application complete";
-                header('location: tas.php');
-            }
+            $sql = "INSERT INTO mailbox (message, sender, recipient) VALUES ('$message', '$sender', '$recipient')";
+            mysqli_query($message_db, $sql);
+            $_SESSION['sent'] = "Your message has been sent.";
             
-            
-
-            
-            
+            header('location: inbox.php');
         }
-
 
     }
 

@@ -19,7 +19,7 @@
                 <h3>
                     <?php
                     echo $_SESSION['success'];
-                    echo $_SESSION['role'];
+                    echo $_SESSION['uName'];
                     unset($_SESSION['success']);
                     ?>
                 </h3>
@@ -27,8 +27,7 @@
         <?php endif ?>
 
         <?php if (isset($_SESSION["uName"])) : ?>
-            <p>Welcome <strong><?php echo $_SESSION["firstName"]; echo " "; echo $_SESSION["lastName"]; ?></strong></p>
-            <p><a href="index.php?logout='1" style="color: red;">Logout</a></p>
+            <p>Welcome <strong><?php echo $_SESSION["firstName"]; echo " "; echo $_SESSION["lastName"]; echo " ("; echo $_SESSION['uName']; echo ")"; ?></strong></p>
         <?php endif ?>
     </div>
 </body>

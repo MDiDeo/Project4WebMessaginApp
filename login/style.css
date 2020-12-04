@@ -7,7 +7,7 @@ body{
     background: #F8F8FF;
 }
 .header {
-    width: 30%;
+    width: 50%;
     margin: 50px auto 0px;
     color: white;
     background: #5f9ea0;
@@ -18,7 +18,7 @@ body{
     padding: 20px;
 }
 form, .content {
-    width: 30%;
+    width: 50%;
     margin: 0px auto;
     padding: 20px;
     border: 1px solid #b0c4de;
@@ -68,4 +68,20 @@ input[type="radio"] {
     background: #dff0d8;
     border: 1px solid #3c763d;
     margin-bottom: 20px;
+}
+th, td {
+    text-align: center;
+    padding: 5px;
+    border: 1px solid black;
+    margin:10px left;
+}
+th {
+    background: #5f9ea0;
+    color: white;
+    padding: 5px;
+}
+table {
+    width: 75%;
+    margin: 0 auto;
+    border-collapse: collapse;
 }
